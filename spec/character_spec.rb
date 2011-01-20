@@ -12,6 +12,7 @@ describe Armory::Character do
     @character.class_name.should == 'Hunter'
     @character.class_id.should == 3
     @character.guild.should == 'Exiled'
+    @character.points.should == 9020
     @character.last_modified.should == Date.parse('2010/10/13')
 
     # Faction
@@ -29,6 +30,12 @@ describe Armory::Character do
     # Server
     @character.realm.should == 'Detheroc'
     @character.battle_group.should == 'Shadowburn'
+    
+    # Title
+    # @character.prefix.should == ''
+    # @character.suffix.should == ', Bane of the Fallen King'
+    @character.title_id.should == 139
+    
   end
 
   it "should parse the list of items" do

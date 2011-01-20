@@ -3,8 +3,8 @@ require 'date'
 module Armory
   class Character
 
-    attr_accessor :name, :level, :guild, :realm, :battle_group, :last_modified
-    attr_accessor :class_id, :gender_id, :race_id, :faction_id
+    attr_accessor :name, :level, :guild, :realm, :battle_group, :points, :last_modified
+    attr_accessor :class_id, :gender_id, :race_id, :faction_id, :title_id
     attr_reader :items
 
     def initialize
@@ -36,6 +36,7 @@ module Armory
         char.guild = info.attr("guildName")
         char.realm = info.attr("realm")
         char.battle_group  = info.attr("battleGroup")
+        char.points = info.attr("points").to_i
         char.last_modified = Date.parse(info.attr('lastModified'))
 
         # Attribute ids
@@ -43,6 +44,7 @@ module Armory
         char.class_id   = info.attr("classId").to_i
         char.gender_id  = info.attr("genderId").to_i
         char.faction_id = info.attr("factionId").to_i
+        char.title_id   = info.attr("titleId").to_i
 
         doc.css("characterTab items item").each do |item|
           char.items << Item.from_armory(item)
