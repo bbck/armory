@@ -22,7 +22,18 @@ describe Armory do
     end
 
     xit "should raise appropriate errors if the armory is not available"
-    xit "should raise appropriate errors if the rate limit has been reached"
+    
+    it "should raise appropriate errors if the rate limit has been reached" do
+      response = stub(
+        :body => '',
+        :code => 503
+      )
+      Typhoeus::Request.expects(:get).returns(response)
+
+      lambda do
+        Armory.character_sheet('us', 'detheroc', 'hunter')
+      end.should raise_exception(Armory::ServiceUnavailable)
+    end
 
     it "should raise appropriate errors if the character cannot be found" do
       response = stub(
@@ -69,6 +80,18 @@ describe Armory do
 
       awesome.gender.should == "Male"
       awesome.gender_id.should == 0
+    end
+
+    it "should raise appropriate errors if the rate limit has been reached" do
+      response = stub(
+        :body => '',
+        :code => 503
+      )
+      Typhoeus::Request.expects(:get).returns(response)
+
+      lambda do
+        Armory.guild_info('us', 'detheroc', 'ZeeGuild')
+      end.should raise_exception(Armory::ServiceUnavailable)
     end
 
     it "should raise error if guild not found" do

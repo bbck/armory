@@ -14,6 +14,7 @@ module Armory
   class Error < Exception; end
   class CharacterNotFound < Error; end
   class GuildNotFound < Error; end
+  class ServiceUnavailable < Error; end
 
   Factions = {
     0 => "Alliance",
@@ -60,6 +61,8 @@ module Armory
     case response.code
     when 404
       raise CharacterNotFound, "Could not find #{character} on #{region}:#{realm}"
+    when 503
+      raise ServiceUnavailable, "The armory throlleted your request for #{character} on #{region}:#{realm}"
     end
 
     Character.from_armory(Nokogiri::XML(response.body))
@@ -71,6 +74,8 @@ module Armory
     case response.code
     when 404
       raise GuildNotFound, "Could not find #{guild_name} on #{region}:#{realm}"
+    when 503
+      raise ServiceUnavailable, "The armory throlleted your request for #{guild_name} on #{region}:#{realm}"
     end
 
     Guild.from_armory(Nokogiri::XML(response.body))
