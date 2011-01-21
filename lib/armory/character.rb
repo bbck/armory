@@ -37,15 +37,15 @@ module Armory
         char.realm = info.attr("realm")
         char.battle_group  = info.attr("battleGroup")
         char.points = info.attr("points").to_i
-        char.last_modified = Date.parse(info.attr('lastModified'))
+        char.last_modified = Date.parse(info.attr('lastModified')) unless info.attr('noCharacter')
 
         # Attribute ids
         char.race_id    = info.attr("raceId").to_i
         char.class_id   = info.attr("classId").to_i
         char.gender_id  = info.attr("genderId").to_i
         char.faction_id = info.attr("factionId").to_i
-        char.title_id   = info.attr("titleId").to_i
-
+        char.title_id   = info.attr("titleId").to_i unless info.attr('noCharacter')
+        
         doc.css("characterTab items item").each do |item|
           char.items << Item.from_armory(item)
         end

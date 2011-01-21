@@ -12,9 +12,9 @@ module Armory
   USER_AGENT = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.4) Gecko/20100503 Firefox/3.6.4'
 
   class Error < Exception; end
-  class CharacterNotFound < Error; end
-  class GuildNotFound < Error; end
+  class NotFound < Error; end
   class ServiceUnavailable < Error; end
+  class ServerError < Error; end
 
   Factions = {
     0 => "Alliance",
@@ -58,25 +58,11 @@ module Armory
   def character_sheet(region, realm, character)
     response = make_request(region, 'character-sheet', :r => realm, :n => character)
 
-    case response.code
-    when 404
-      raise CharacterNotFound, "Could not find #{character} on #{region}:#{realm}"
-    when 503
-      raise ServiceUnavailable, "The armory throlleted your request for #{character} on #{region}:#{realm}"
-    end
-
     Character.from_armory(Nokogiri::XML(response.body))
   end
 
   def guild_info(region, realm, guild_name)
     response = make_request(region, 'guild-info', :r => realm, :gn => guild_name)
-
-    case response.code
-    when 404
-      raise GuildNotFound, "Could not find #{guild_name} on #{region}:#{realm}"
-    when 503
-      raise ServiceUnavailable, "The armory throlleted your request for #{guild_name} on #{region}:#{realm}"
-    end
 
     Guild.from_armory(Nokogiri::XML(response.body))
   end
@@ -85,10 +71,21 @@ module Armory
 
   # TODO: Use region
   def make_request(region, page, params)
-    Typhoeus::Request.get("http://us.wowarmory.com/#{page}.xml", {
-      :user_agent => USER_AGENT,
-      :params     => params
+    response = Typhoeus::Request.get("http://us.wowarmory.com/#{page}.xml", {
+                 :user_agent => USER_AGENT,
+                 :params     => params
     })
+    
+    case response.code
+    when 404
+      raise NotFound, "Your request was not found."
+    when 503
+      raise ServiceUnavailable, "The armory has throlleted your request."
+    when 500
+      raise ServerError, "An unknown armory error occured."
+    end
+    
+    return response
   end
 
 end

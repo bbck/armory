@@ -20,8 +20,6 @@ describe Armory do
       # Basic information
       result.should be_instance_of(Armory::Character)
     end
-
-    xit "should raise appropriate errors if the armory is not available"
     
     it "should raise appropriate errors if the rate limit has been reached" do
       response = stub(
@@ -44,7 +42,19 @@ describe Armory do
 
       lambda do
         Armory.character_sheet('us', 'detheroc', 'hunter')
-      end.should raise_exception(Armory::CharacterNotFound)
+      end.should raise_exception(Armory::NotFound)
+    end
+    
+    it "should raise appropiate errors if the armory in unavailable" do
+      response = stub(
+        :body => '',
+        :code => 500
+      )
+      Typhoeus::Request.expects(:get).returns(response)
+      
+      lambda do
+        Armory.character_sheet('us', 'detheroc', 'hunter')
+      end.should raise_exception(Armory::ServerError)
     end
   end
 
@@ -103,8 +113,19 @@ describe Armory do
 
       lambda do
         Armory.guild_info('us', 'detheroc', 'ZeeGuild')
-      end.should raise_exception(Armory::GuildNotFound)
+      end.should raise_exception(Armory::NotFound)
     end
-
+    
+    it "should raise appropiate errors if the armory in unavailable" do
+      response = stub(
+        :body => '',
+        :code => 500
+      )
+      Typhoeus::Request.expects(:get).returns(response)
+      
+      lambda do
+        Armory.guild_info('us', 'detheroc', 'ZeGuild')
+      end.should raise_exception(Armory::ServerError)
+    end
   end
 end
