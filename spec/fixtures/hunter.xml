@@ -2,7 +2,22 @@
   <tabInfo subTab="profile" tab="character" tabGroup="character" tabUrl="r=Detheroc&amp;cn=Hunter&amp;gn=Exiled"/>
   <characterInfo>
     <character battleGroup="Shadowburn" charUrl="r=Detheroc&amp;cn=Hunter" class="Hunter" classId="3" classUrl="c=Hunter" faction="Horde" factionId="1" gender="Male" genderId="0" guildName="Exiled" guildUrl="r=Detheroc&amp;gn=Exiled" lastModified="October 13, 2010" level="80" name="Hunter" points="9020" prefix="" race="Orc" raceId="2" realm="Detheroc" suffix=", Bane of the Fallen King" titleId="139">
-      <modelBasePath value="http://us.media.battle.net.edgesuite.net/"/>
+	    <arenaTeams> 
+        <arenaTeam battleGroup="Shadowburn" created="1294099200000" faction="Horde" factionId="1" gamesPlayed="0" gamesWon="0" lastSeasonRanking="0" name="eventually we will win" ranking="4325" rating="1558" realm="Detheroc" realmUrl="b=Shadowburn&amp;r=Detheroc&amp;ts=2&amp;t=eventually+we+will+win&amp;ff=realm&amp;fv=Detheroc&amp;select=eventually+we+will+win" season="0" seasonGamesPlayed="56" seasonGamesWon="30" size="2" teamSize="2" teamUrl="r=Detheroc&amp;ts=2&amp;t=eventually+we+will+win&amp;select=eventually+we+will+win" url="r=Detheroc&amp;ts=2&amp;t=eventually+we+will+win&amp;select=eventually+we+will+win"> 
+          <emblem background="ff000000" borderColor="ffedadd4" borderStyle="1" iconColor="fff9fff7" iconStyle="47"/> 
+          <members> 
+            <character battleGroup="" charUrl="r=Detheroc&amp;cn=Abbrey" class="Warrior" classId="1" contribution="1558" gamesPlayed="0" gamesWon="0" gender="Female" genderId="1" guild="Last Eclipse" guildId="26100767" guildUrl="r=Detheroc&amp;gn=Last+Eclipse" name="Abbrey" race="Tauren" raceId="6" seasonGamesPlayed="56" seasonGamesWon="30" teamRank="0"/> 
+            <character battleGroup="" charUrl="r=Detheroc&amp;cn=Hunter" class="Hunter" classId="3" contribution="1369" gamesPlayed="0" gamesWon="0" gender="Male" genderId="0" guild="Exiled" guildId="7451758" guildUrl="r=Detheroc&amp;gn=Exiled" name="Hunter" race="Orc" raceId="2" seasonGamesPlayed="26" seasonGamesWon="15" teamRank="1"/> 
+          </members> 
+        </arenaTeam> 
+        <arenaTeam battleGroup="Shadowburn" created="1294704000000" faction="Horde" factionId="1" gamesPlayed="0" gamesWon="0" lastSeasonRanking="0" name="Yiffing in the Shadows" ranking="0" rating="0" realm="Detheroc" realmUrl="b=Shadowburn&amp;r=Detheroc&amp;ts=3&amp;t=Yiffing+in+the+Shadows&amp;ff=realm&amp;fv=Detheroc&amp;select=Yiffing+in+the+Shadows" season="0" seasonGamesPlayed="0" seasonGamesWon="0" size="3" teamSize="3" teamUrl="r=Detheroc&amp;ts=3&amp;t=Yiffing+in+the+Shadows&amp;select=Yiffing+in+the+Shadows" url="r=Detheroc&amp;ts=3&amp;t=Yiffing+in+the+Shadows&amp;select=Yiffing+in+the+Shadows"> 
+          <emblem background="ff000000" borderColor="fff5ffef" borderStyle="6" iconColor="ffbaf5f1" iconStyle="100"/> 
+          <members> 
+            <character battleGroup="" charUrl="r=Detheroc&amp;cn=Hunter" class="Hunter" classId="3" contribution="0" gamesPlayed="0" gamesWon="0" gender="Male" genderId="0" guild="Exiled" guildId="7451758" guildUrl="r=Detheroc&amp;gn=Exiled" name="Hunter" race="Orc" raceId="2" seasonGamesPlayed="0" seasonGamesWon="0" teamRank="0"/> 
+          </members> 
+        </arenaTeam> 
+      </arenaTeams>
+	    <modelBasePath value="http://us.media.battle.net.edgesuite.net/"/>
     </character>
     <characterTab>
       <talentSpecs>

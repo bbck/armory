@@ -5,10 +5,11 @@ module Armory
 
     attr_accessor :name, :level, :guild, :realm, :battle_group, :points, :last_modified
     attr_accessor :class_id, :gender_id, :race_id, :faction_id, :title_id
-    attr_reader :items
+    attr_reader :items, :arena_teams
 
     def initialize
       @items = []
+      @arena_teams = []
     end
 
     def class_name
@@ -49,6 +50,10 @@ module Armory
         doc.css("characterTab items item").each do |item|
           char.items << Item.from_armory(item)
         end
+
+        doc.css("arenaTeams arenaTeam").each do |team|
+          char.arena_teams << ArenaTeam.from_armory(team)
+        end
       end
     end
 
@@ -77,6 +82,61 @@ module Armory
             gem = doc.attr("gem#{i}Id").to_i
             item.gems << gem if gem != 0
           end
+        end
+      end
+    end
+ 
+    class ArenaTeam
+      attr_accessor :name, :size, :rating, :ranking
+      attr_accessor :games_played, :games_won
+      attr_reader :members
+      
+      def initialize
+        @members = []
+      end
+      
+      def self.from_armory(doc)
+        ArenaTeam.new.tap do |team|
+          team.name         = doc.attr('name')
+          team.size         = doc.attr('size').to_i
+          team.rating       = doc.attr('rating').to_i
+          team.ranking      = doc.attr('ranking').to_i
+          team.games_played = doc.attr('seasonGamesPlayed').to_i
+          team.games_won    = doc.attr('seasonGamesWon').to_i
+          
+          doc.css("members character").each do |member|
+            team.members << ArenaTeamMember.from_armory(member)
+          end
+        end
+      end
+    end
+    
+    class ArenaTeamMember
+      attr_accessor :name, :guild, :class_id, :gender_id, :race_id, :rating
+      attr_accessor :games_played, :games_won
+      
+      def class_name
+        Armory::Classes[class_id]
+      end
+
+      def gender
+        Armory::Genders[gender_id]
+      end
+
+      def race
+        Armory::Races[race_id]
+      end
+      
+      def self.from_armory(doc)
+        ArenaTeamMember.new.tap do |member|
+          member.name         = doc.attr('name')
+          member.guild        = doc.attr('guild')
+          member.class_id     = doc.attr("classId").to_i
+          member.gender_id    = doc.attr("genderId").to_i
+          member.race_id      = doc.attr("raceId").to_i
+          member.rating       = doc.attr('contribution').to_i
+          member.games_played = doc.attr('seasonGamesPlayed').to_i
+          member.games_won    = doc.attr('seasonGamesWon').to_i
         end
       end
     end

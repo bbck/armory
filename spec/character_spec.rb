@@ -73,4 +73,35 @@ describe Armory::Character do
       item.gems.should           == []
     end
   end
+  
+  it "should parse the arena teams" do
+    @character.arena_teams.size.should == 2
+
+    # Validate that at least one has parsed correctly
+    @character.arena_teams.first.tap do |team|
+      # Basic information
+      team.name.should         == "eventually we will win"
+      team.size.should         == 2
+      team.rating.should       == 1558
+      team.ranking.should      == 4325
+      team.games_played.should == 56
+      team.games_won.should    == 30
+      
+      # Team members
+      team.members.size.should == 2
+      team.members.first.tap do |member|
+        member.name.should         == "Abbrey"
+        member.guild.should        == "Last Eclipse"
+        member.class_name.should   == "Warrior"
+        member.class_id.should     == 1
+        member.gender.should       == "Female"
+        member.gender_id.should    == 1
+        member.race.should         == "Tauren"
+        member.race_id.should      == 6
+        member.rating.should       == 1558
+        member.games_played.should == 56
+        member.games_won.should    == 30
+      end
+    end
+  end
 end
