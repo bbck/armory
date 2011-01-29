@@ -43,6 +43,16 @@ describe Armory do
       lambda do
         Armory.character_sheet('us', 'detheroc', 'hunter')
       end.should raise_exception(Armory::NotFound)
+      
+      response = stub(
+        :body => fixture("stale"),
+        :code => 200
+      )
+      Typhoeus::Request.expects(:get).returns(response)
+
+      lambda do
+        Armory.character_sheet('us', 'blackrock', 'melana')
+      end.should raise_exception(Armory::NotFound)
     end
     
     it "should raise appropiate errors if the armory in unavailable" do

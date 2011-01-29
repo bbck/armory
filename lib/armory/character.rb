@@ -30,6 +30,13 @@ module Armory
 
     def self.from_armory(doc)
       Character.new.tap do |char|
+        if doc.css("characterInfo").attr("errCode")
+          case doc.css("characterInfo").attr("errCode").to_s
+          when "noCharacter"
+            raise NotFound, "Your request was not found."
+          end
+        end
+        
         info = doc.css("characterInfo character").first
 
         char.name  = info.attr("name")
