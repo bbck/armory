@@ -19,9 +19,9 @@ module Armory
       
       def self.from_armory(doc)
         Statistic.new.tap do |statistic|
-          statistic.id          = doc.attr('id')
+          statistic.id          = doc.attr('id').to_i
           statistic.name        = doc.attr('name')
-          statistic.highest     = doc.attr("highest").to_i
+          statistic.highest     = doc.attr("highest")
           statistic.quantity    = doc.attr("quantity").to_i unless doc.attr("quantity") == '--'
         end
       end
