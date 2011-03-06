@@ -6,8 +6,9 @@ module Armory
 
   autoload :VERSION, "armory/version"
 
-  autoload :Guild,     "armory/guild"
-  autoload :Character, "armory/character"
+  autoload :Guild,      "armory/guild"
+  autoload :Character,  "armory/character"
+  autoload :Statistics, "armory/statistics"
 
   USER_AGENT = 'Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.6; en-US; rv:1.9.2.4) Gecko/20100503 Firefox/3.6.4'
 
@@ -66,7 +67,13 @@ module Armory
 
     Guild.from_armory(Nokogiri::XML(response.body))
   end
-
+  
+  def statistics(region, realm, character, category = 0)
+    response = make_request(region, 'character-statistics', :r => realm, :n => character, :c => category)
+    
+    Statistics.from_armory(Nokogiri::XML(response.body))
+  end
+  
   private
 
   # TODO: Use region
