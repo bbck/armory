@@ -84,6 +84,8 @@ module Armory
     })
     
     case response.code
+    when 302
+      raise ServerError, "An unknown armory error occured."
     when 404
       raise NotFound, "Your request was not found."
     when 503
